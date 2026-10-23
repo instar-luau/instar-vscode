@@ -2,10 +2,9 @@
 
 ## [0.1.3](https://github.com/instar-luau/instar-vscode/compare/v0.1.2...v0.1.3) (2026-10-23)
 
-
 ### Bug Fixes
 
-* update bundled Instar to 0.1.4 ([b108945](https://github.com/instar-luau/instar-vscode/commit/b1089455c598b3ef8592603ecf472537f5d5bc03))
+- update bundled Instar to 0.1.4 ([b108945](https://github.com/instar-luau/instar-vscode/commit/b1089455c598b3ef8592603ecf472537f5d5bc03))
 
 ## [0.1.2](https://github.com/instar-luau/instar-vscode/compare/v0.1.1...v0.1.2) (2026-10-23)
 
