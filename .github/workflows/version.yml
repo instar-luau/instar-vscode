@@ -29,7 +29,28 @@ jobs:
           permission-pull-requests: write
 
       - name: prepare release
+        id: release
         uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7
         with:
           token: ${{ steps.token.outputs.token }}
           release-type: node
+
+      - name: check out release pull request
+        if: steps.release.outputs.pr
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ fromJSON(steps.release.outputs.pr).headBranchName }}
+          persist-credentials: false
+
+      - name: set up tools
+        if: steps.release.outputs.pr
+        uses: jdx/mise-action@8418fedb1110381a0d3ba51a7a415d7c1b884550
+        with:
+          cache: false
+
+      - name: format release changelog
+        if: steps.release.outputs.pr
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+          RELEASE_BRANCH: ${{ fromJSON(steps.release.outputs.pr).headBranchName }}
+        run: nu scripts/nushell/changelog.nu

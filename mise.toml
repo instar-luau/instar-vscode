@@ -1,4 +1,5 @@
 [tools]
+"aqua:nushell/nushell" = "latest"
+"npm:typescript" = "latest"
 bun = "latest"
 node = "latest"
-"npm:typescript" = "latest"
