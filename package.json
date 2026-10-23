@@ -44,6 +44,7 @@
     "vscode-languageclient": "11.0.0"
   },
   "devDependencies": {
+    "7z-wasm": "1.2.0",
     "@tooling/node": "npm:@types/node@26.6.5",
     "@types/bun": "1.4.4",
     "@types/node": "24.19.2",
