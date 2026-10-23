@@ -19,7 +19,7 @@
     "type": "git",
     "url": "https://github.com/instar-luau/instar-vscode.git"
   },
-  "publisher": "instar-luau",
+  "publisher": "Instar",
   "files": [
     "dist/extension.cjs",
     "dist/extension.cjs.map",
@@ -43,11 +43,11 @@
     "test": "bun test"
   },
   "dependencies": {
-    "vscode-languageclient": "10.1.2"
+    "vscode-languageclient": "11.0.0"
   },
   "devDependencies": {
     "@tooling/node": "npm:@types/node@26.6.5",
-    "@types/bun": "1.4.3",
+    "@types/bun": "1.4.4",
     "@types/node": "24.19.2",
     "@types/vscode": "1.140.0",
     "@vscode/vsce": "4.0.0",
