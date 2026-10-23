@@ -54,4 +54,4 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.token.outputs.token }}
           RELEASE_BRANCH: ${{ fromJSON(steps.release.outputs.pr || '{}').headBranchName }}
-        run: nu scripts/nushell/release.nu
+        run: nu scripts/release.nu
