@@ -1,9 +1,9 @@
 name: release
 
 on:
-  push:
-    tags:
-      - "v*"
+  release:
+    types:
+      - published
 
 permissions:
   contents: read
@@ -80,7 +80,7 @@ jobs:
           path: dist
           merge-multiple: true
 
-      - name: publish github release
+      - name: upload release packages
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" dist/*.vsix --verify-tag --generate-notes
+        run: gh release upload "$GITHUB_REF_NAME" dist/*.vsix

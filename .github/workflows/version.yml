@@ -1,0 +1,35 @@
+name: version
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: version-${{ github.ref }}
+  queue: max
+
+jobs:
+  version:
+    name: prepare release
+    environment: release
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    steps:
+      - name: create release token
+        id: token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
+        with:
+          client-id: ${{ vars.RELEASE_CLIENT_IDENTIFIER }}
+          private-key: ${{ secrets.RELEASE_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+
+      - name: prepare release
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7
+        with:
+          token: ${{ steps.token.outputs.token }}
+          release-type: node
