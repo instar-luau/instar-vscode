@@ -24,6 +24,7 @@
     "dist/extension.cjs",
     "dist/extension.cjs.map",
     "dist/LICENSE",
+    "language.json",
     "server/**",
     "LICENSE"
   ],
@@ -52,6 +53,134 @@
     "oxlint": "1.89.0",
     "oxlint-tsgolint": "7.0.2005",
     "textmate-luau": "github:instar-luau/textmate-luau"
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "luau",
+        "aliases": [
+          "Luau"
+        ],
+        "extensions": [
+          ".luau"
+        ],
+        "configuration": "./language.json"
+      }
+    ],
+    "configurationDefaults": {
+      "[luau]": {
+        "editor.semanticHighlighting.enabled": true
+      }
+    },
+    "commands": [
+      {
+        "command": "instar.restart",
+        "title": "Restart Language Server",
+        "category": "Instar"
+      },
+      {
+        "command": "instar.stop",
+        "title": "Stop Language Server",
+        "category": "Instar"
+      },
+      {
+        "command": "instar.output",
+        "title": "Show Output",
+        "category": "Instar"
+      }
+    ],
+    "configuration": {
+      "title": "Instar",
+      "properties": {
+        "instar.executable": {
+          "type": "string",
+          "scope": "machine",
+          "description": "Absolute path to an Instar executable. Leave empty to use bundled Instar. Reload the window after changing this setting."
+        },
+        "instar.diagnostic_scope": {
+          "type": "string",
+          "enum": [
+            "open_files",
+            "workspace"
+          ],
+          "default": "open_files",
+          "scope": "resource",
+          "description": "Files for which Instar publishes diagnostics."
+        },
+        "instar.completion_snippets": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "Include snippets in completions."
+        },
+        "instar.import.enabled": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "Suggest imports in completions."
+        },
+        "instar.import.require": {
+          "type": "string",
+          "enum": [
+            "string",
+            "instance"
+          ],
+          "default": "string",
+          "scope": "resource",
+          "description": "Use string paths or Roblox instance paths for suggested imports."
+        },
+        "instar.import.binding": {
+          "type": "string",
+          "enum": [
+            "local",
+            "const"
+          ],
+          "default": "local",
+          "scope": "resource",
+          "description": "Declaration keyword for suggested imports."
+        },
+        "instar.import.include": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "scope": "resource",
+          "description": "Workspace-relative glob patterns for import suggestions. An empty list includes all modules."
+        },
+        "instar.import.exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "scope": "resource",
+          "description": "Workspace-relative glob patterns excluded from import suggestions."
+        },
+        "instar.hints.variable_types": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "Show inferred variable type hints."
+        },
+        "instar.hints.parameter_names": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "Show parameter name hints at call sites."
+        },
+        "instar.hints.return_types": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "Show inferred function return type hints."
+        },
+        "instar.hints.hide_obvious": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "Hide hints that are evident from the surrounding code."
+        }
+      }
+    }
   },
   "engines": {
     "vscode": "^1.140.0"
