@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.1](https://github.com/instar-luau/instar-vscode/compare/v0.1.0...v0.1.1) (2026-10-23)
+
+
+### Bug Fixes
+
+* format all generated release files ([8bd460d](https://github.com/instar-luau/instar-vscode/commit/8bd460d50cc1c9ab1ef1bb600dc3a3fbd763b099))
+* handle empty release pull request output ([a024a5d](https://github.com/instar-luau/instar-vscode/commit/a024a5d78035dec4ff382890b4f4842a4b1c39da))
+
 ## 0.1.0 (2026-10-23)
 
 ### Features
