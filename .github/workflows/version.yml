@@ -49,9 +49,9 @@ jobs:
         with:
           cache: false
 
-      - name: format release changelog
+      - name: format release files
         if: steps.release.outputs.pr
         env:
           GH_TOKEN: ${{ steps.token.outputs.token }}
           RELEASE_BRANCH: ${{ fromJSON(steps.release.outputs.pr || '{}').headBranchName }}
-        run: nu scripts/nushell/changelog.nu
+        run: nu scripts/nushell/release.nu
