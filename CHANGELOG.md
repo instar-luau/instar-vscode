@@ -2,10 +2,9 @@
 
 ## [0.1.2](https://github.com/instar-luau/instar-vscode/compare/v0.1.1...v0.1.2) (2026-10-23)
 
-
 ### Bug Fixes
 
-* extract bundled server archives with 7z-wasm ([b5a75ce](https://github.com/instar-luau/instar-vscode/commit/b5a75ce02461ba326bca23f12dfb485da6aa517c))
+- extract bundled server archives with 7z-wasm ([b5a75ce](https://github.com/instar-luau/instar-vscode/commit/b5a75ce02461ba326bca23f12dfb485da6aa517c))
 
 ## [0.1.1](https://github.com/instar-luau/instar-vscode/compare/v0.1.0...v0.1.1) (2026-10-23)
 
