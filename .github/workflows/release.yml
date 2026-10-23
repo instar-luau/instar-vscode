@@ -1,0 +1,86 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  queue: max
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    name: build ${{ matrix.target }}
+    runs-on: ${{ matrix.target == 'win32-x64' && 'windows-2025' || 'ubuntu-26.04' }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - win32-x64
+          - linux-x64
+          - darwin-x64
+          - darwin-arm64
+    env:
+      TARGET: ${{ matrix.target }}
+    steps:
+      - name: check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: set up tools
+        uses: jdx/mise-action@8418fedb1110381a0d3ba51a7a415d7c1b884550
+        with:
+          cache: false
+
+      - name: check release version
+        run: test "$GITHUB_REF_NAME" = "v$(bun -p 'require("./package.json").version')"
+
+      - name: install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: package extension
+        run: |
+          bun run package "$TARGET"
+          mv dist/instar.vsix "dist/$TARGET.vsix"
+
+      - name: upload package
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: package-${{ matrix.target }}
+          path: dist/${{ matrix.target }}.vsix
+          if-no-files-found: error
+
+  publish:
+    name: publish release
+    needs: build
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    permissions:
+      contents: write # Publish release packages.
+    steps:
+      - name: check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: download packages
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          pattern: package-*
+          path: dist
+          merge-multiple: true
+
+      - name: publish github release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/*.vsix --verify-tag --generate-notes
