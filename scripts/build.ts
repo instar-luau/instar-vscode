@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 
 const root = resolve(import.meta.dir, "..");
+const grammarDirectory = resolve(root, "node_modules/textmate-luau");
 
 const result = await Bun.build({
     entrypoints: [join(root, "src/extension.ts")],
@@ -18,6 +19,8 @@ if (result.metafile === undefined) {
     throw new Error("The extension build did not produce dependency information.");
 }
 
+await Bun.write(join(root, "dist/grammar.json"), Bun.file(join(grammarDirectory, "grammar.json")));
+
 const dependencies = new Set<string>();
 
 for (const filename of Object.keys(result.metafile.inputs)) {
@@ -30,7 +33,9 @@ for (const filename of Object.keys(result.metafile.inputs)) {
     }
 }
 
-const notices: string[] = [];
+const notices: string[] = [
+    `textmate-luau\n\n${readFileSync(join(grammarDirectory, "LICENSE"), "utf8")}`,
+];
 
 for (const directory of [...dependencies].toSorted()) {
     const files = readdirSync(directory);
